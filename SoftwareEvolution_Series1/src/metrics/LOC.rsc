@@ -88,24 +88,13 @@ public map[loc, int] MethodLinesOfCode(set[Declaration] ast)
 	{
 		visit(decl)
 		{
-			case \m:method(_,_,_,_):
-				{
-					if(m@src.top notin fileCode)
-						fileCode += (m@src.top: CodeNoComments({ comment.comments | comment <- GetFileM3(m@src)@documentation }, m@src.top));
-					linesOfCode[m@decl] ? 0 += (0 | it + 1 | line <- fileCode[m@src.top][m@src.begin.line-1..m@src.end.line], /^\s*$/ !:= line);
-				}
-			case \m:method(_,_,_,_,_):
-				{
-					if(m@src.top notin fileCode)
-						fileCode += (m@src.top: CodeNoComments({ comment.comments | comment <- GetFileM3(m@src)@documentation }, m@src.top));
-					linesOfCode[m@decl] ? 0 += (0 | it + 1 | line <- fileCode[m@src.top][m@src.begin.line-1..m@src.end.line], /^\s*$/ !:= line);
-				}
-			case \m:constructor(_,_,_,_):
-				{
-					if(m@src.top notin fileCode)
-						fileCode += (m@src.top: CodeNoComments({ comment.comments | comment <- GetFileM3(m@src)@documentation }, m@src.top));
-					linesOfCode[m@decl] ? 0 += (0 | it + 1 | line <- fileCode[m@src.top][m@src.begin.line-1..m@src.end.line], /^\s*$/ !:= line);
-				}
+			case Declaration x:
+		    	if (x is method || x is constructor)
+		    	{
+		    		if(x@src.top notin fileCode)
+						fileCode += (x@src.top: CodeNoComments({ comment.comments | comment <- GetFileM3(x@src)@documentation }, x@src.top));
+					linesOfCode[x@decl] ? 0 += (0 | it + 1 | line <- fileCode[x@src.top][x@src.begin.line-1..x@src.end.line], /^\s*$/ !:= line);
+		    	}
 		}
 	}
 	

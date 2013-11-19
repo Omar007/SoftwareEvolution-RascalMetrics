@@ -19,12 +19,12 @@ public map[loc, int] MethodCC(set[Declaration] ast)
 	{
 		visit(decl)
 		{
+			case Declaration x:
+				if(method(_,_,_,_, stmnt) := x || constructor(_, _, _, stmnt) := x)
+					ccMethods += (x@decl: GetStatementCount(stmnt));
+				else fail;
 			case \m:method(_,_,_,_):
 				ccMethods += (m@decl: 1);
-			case \m:method(_,_,_,_,stmnt):
-				ccMethods += (m@decl: GetStatementCount(stmnt));
-			case \m:constructor(_, _, _, stmnt):
-				ccMethods += (m@decl: GetStatementCount(stmnt));
 		}
 	}
 	

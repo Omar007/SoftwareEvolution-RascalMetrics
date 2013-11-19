@@ -6,15 +6,6 @@ public class DuplicationTest
 		
 	}
 	
-	public void Method2()
-	{
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-	}
-	
 	public void Method0()
 	{
 		System.out.println();
@@ -28,6 +19,15 @@ public class DuplicationTest
 	public void Method1()
 	{
 		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+	}
+	
+	public void Method2()
+	{
 		System.out.println();
 		System.out.println();
 		System.out.println();

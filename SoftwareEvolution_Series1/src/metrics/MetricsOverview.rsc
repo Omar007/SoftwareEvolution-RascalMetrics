@@ -2,6 +2,7 @@ module metrics::MetricsOverview
 
 import IO;
 import String;
+import List;
 import Map;
 import DateTime;
 import util::FileSystem;
@@ -13,7 +14,6 @@ import metrics::LOC;
 import metrics::CC;
 import metrics::Duplication;
 
-//:set profiling true
 
 public void RunDefaultMetrics()
 {
@@ -63,7 +63,7 @@ public void MetricsOverview(loc projectLoc, loc exclLoc)
 	set[Declaration] ast = CalcAST(resultsFile, projectLoc);
 	int totalLOC = CalcLOC(resultsFile, model, { cu | cu <- compilationUnits(model), !contains(cu.path, exclLoc.path) });
 	map[loc, int] methodLOCs = CalcMethodLOCs(resultsFile, ast);
-	methodLocs = (k: methodLOCs[k] | k <- methodLOCs, !(contains(k.path, exclLoc.path)));
+	methodLOCs = (k: methodLOCs[k] | k <- methodLOCs, !(contains(k.path, exclLoc.path)));
 	map[loc, int] methodCCs = CalcMethodCCs(resultsFile, ast);
 	methodCCs = (k: methodCCs[k] | k <- methodCCs, !(contains(k.path, exclLoc.path)));
 	int duplLOC = CalcDuplLOC(resultsFile, model, { cu | cu <- compilationUnits(model), !(contains(cu.path, exclLoc.path)) });
@@ -98,8 +98,8 @@ private set[Declaration] CalcAST(loc resultsFile, loc projectLoc)
 private int CalcLOC(loc resultsFile, M3 model, set[loc] files)
 {
 	datetime startTime = now();
-	map[loc, int] cuLoc = FileLinesOfCode(model, files);
-	int totalLOC = (0 | it + cuLoc[location] | location <- cuLoc);
+	map[loc, int] cuLOC = FileLinesOfCode(model, files);
+	int totalLOC = (0 | it + cuLOC[location] | location <- cuLOC);
 	appendToFile(resultsFile, "LOC Time:\t\t\t<now() - startTime>\r\n");
 	
 	return totalLOC;
@@ -137,14 +137,18 @@ private int CalcDuplLOC(loc resultsFile, M3 model, set[loc] files)
 private void CalcRatings(loc resultsFile, int totalLOC, map[loc, int] methodLOCs, map[loc, int] methodCCs, int duplLOC)
 {
 	datetime startTime = now();
+	
 	str locRank = GetLOCRank(totalLOC);
 	str ccRank = GetCCRank(methodCCs, methodLOCs, totalLOC);
+	str mlocRank = GetMethodLOCRank(methodLOCs, totalLOC);
 	str duplRank = GetDuplicationRank(duplLOC, totalLOC);
-	appendToFile(resultsFile, "Calc Rating Time:\t<now() - startTime>\r\n");
 	
+	appendToFile(resultsFile, "Calc Rating Time:\t<now() - startTime>\r\n");
 	appendToFile(resultsFile, "Duplicated Lines:\t<duplLOC>\r\n");
+	appendToFile(resultsFile, "\r\n");
 	appendToFile(resultsFile, "LOC Rating:\t\t\t<locRank>\r\n");
 	appendToFile(resultsFile, "CC Rating:\t\t\t<ccRank>\r\n");
+	appendToFile(resultsFile, "mLOC Rating:\t\t<mlocRank>\r\n");
 	appendToFile(resultsFile, "Dupl Rating:\t\t<duplRank>\r\n");
 }
 
@@ -153,38 +157,24 @@ private void CalcRatings(loc resultsFile, int totalLOC, map[loc, int] methodLOCs
 //o		246k-665k
 //-		665k-1310k
 //--	>1310k
-private str GetLOCRank(int totalLoc)
+private str GetLOCRank(int totalLOC)
 {
-	if(totalLoc <= 66000) return "++ (<totalLoc>)";
-	else if(totalLoc <= 246000) return "+ (<totalLoc>)";
-	else if(totalLoc <= 665000) return "o (<totalLoc>)";
-	else if(totalLoc <= 1310) return "- (<totalLoc>)";
-	else return "-- (<totalLoc>)";
+	if(totalLOC <= 66000) return "++ (<totalLOC>)";
+	else if(totalLOC <= 246000) return "+ (<totalLOC>)";
+	else if(totalLOC <= 665000) return "o (<totalLOC>)";
+	else if(totalLOC <= 1310) return "- (<totalLOC>)";
+	else return "-- (<totalLOC>)";
 }
 
-
-
-
-
-//MethodCC(astModel) MethodLinesOfCode(astModel)
-//methodCCs methodLocs
-//
-//
-//
-//import analysis::statistics::Descriptive;
-//
-//median([ methodLocs[method] | method <- methodLocs, methodCCs[method] > 50 ])
-//percentile([ methodLocs[method] | method <- methodLocs, methodCCs[method] > 50 ], 50)
-
-//Low Risk			1-10
-//Moderate Risk		11-20
-//High Risk			21-50
-//Very High Risk	> 50
+//Low Risk			0-10
+//Moderate Risk		11-40
+//High Risk			41-100
+//Very High Risk	> 100
 private int GetMethodLOCRisk(int linesOfCode)
 {
 	if(linesOfCode <= 10) return 0;
-	else if(linesOfCode <= 20) return 1;
-	else if(linesOfCode <= 50) return 2;
+	else if(linesOfCode <= 40) return 1;
+	else if(linesOfCode <= 100) return 2;
 	else return 3;
 }
 
@@ -193,31 +183,27 @@ private int GetMethodLOCRisk(int linesOfCode)
 //o		Moderate: <= 40%	High: <= 10%	Very High: 0%
 //-		Moderate: <= 50%	High: <= 15%	Very High: <= 5%
 //--	Moderate: > 50%		High: > 15%		Very High: > 5%
-private str GetMethodLOCRank(map[loc, int] methodLocs, int totalLoc)
+private str GetMethodLOCRank(map[loc, int] methodLOCs, int totalLOC)
 {
-	map[int, num] riskLoc = (1: 0, 2: 0, 3: 0);
+	map[int, num] riskLOC = (1: 0, 2: 0, 3: 0);
 	
-	for(method <- methodLocs)
+	for(method <- methodLOCs)
 	{
-		int risk = GetMethodLOCRisk(methodLocs[method]);
+		int risk = GetMethodLOCRisk(methodLOCs[method]);
 		
 		//We don't care about 'Low' risk.
-		if(risk > 0) riskLoc[risk] += methodLocs[method];
+		if(risk > 0) riskLOC[risk] += methodLOCs[method];
 	}
 	
 	//Convert to percentages
-	riskLoc = ( risk: ((riskLoc[risk] / totalLoc) * 100.0) | risk <- riskLoc );
+	riskLOC = ( risk: ((riskLOC[risk] / totalLOC) * 100.0) | risk <- riskLOC );
 	
-	if(riskLoc[1] <= 25 && riskLoc[2] <= 0 && riskLoc[3] <= 0) return "++ <riskLoc>";
-	else if(riskLoc[1] <= 30 && riskLoc[2] <= 5 && riskLoc[3] <= 0) return "+ <riskLoc>";
-	else if(riskLoc[1] <= 40 && riskLoc[2] <= 10 && riskLoc[3] <= 0) return "o <riskLoc>";
-	else if(riskLoc[1] <= 50 && riskLoc[2] <= 15 && riskLoc[3] <= 5) return "- <riskLoc>";
-	else return "-- <riskLoc>";
+	if(riskLOC[1] <= 30 && riskLOC[2] <= 10 && riskLOC[3] <= 0) return "++ <riskLOC>";
+	else if(riskLOC[1] <= 40 && riskLOC[2] <= 15 && riskLOC[3] <= 5) return "+ <riskLOC>";
+	else if(riskLOC[1] <= 50 && riskLOC[2] <= 20 && riskLOC[3] <= 10) return "o <riskLOC>";
+	else if(riskLOC[1] <= 60 && riskLOC[2] <= 25 && riskLOC[3] <= 15) return "- <riskLOC>";
+	else return "-- <riskLOC>";
 }
-
-
-
-
 
 //Low Risk			1-10
 //Moderate Risk		11-20
@@ -236,28 +222,28 @@ private int GetCCRisk(int cc)
 //o		Moderate: <= 40%	High: <= 10%	Very High: 0%
 //-		Moderate: <= 50%	High: <= 15%	Very High: <= 5%
 //--	Moderate: > 50%		High: > 15%		Very High: > 5%
-private str GetCCRank(map[loc, int] methodCCs, map[loc, int] methodLocs, int totalLoc)
+private str GetCCRank(map[loc, int] methodCCs, map[loc, int] methodLOCs, int totalLOC)
 {
-	map[int, num] riskLoc = (1: 0, 2: 0, 3: 0);
+	map[int, num] riskLOC = (1: 0, 2: 0, 3: 0);
 	
-	assert (domain(methodCCs) == domain(methodLocs)) : "Not comparing the same methods: <methodCCs - methodLocs>";
+	assert (domain(methodCCs) == domain(methodLOCs)) : "Not comparing the same methods: <methodCCs - methodLOCs>";
 	
 	for(method <- methodCCs)
 	{
 		int ccRisk = GetCCRisk(methodCCs[method]);
 		
 		//We don't care about 'Low' risk.
-		if(ccRisk > 0) riskLoc[ccRisk] += methodLocs[method];
+		if(ccRisk > 0) riskLOC[ccRisk] += methodLOCs[method];
 	}
 	
 	//Convert to percentages
-	riskLoc = ( risk: ((riskLoc[risk] / totalLoc) * 100.0) | risk <- riskLoc );
+	riskLOC = ( risk: ((riskLOC[risk] / totalLOC) * 100.0) | risk <- riskLOC );
 	
-	if(riskLoc[1] <= 25 && riskLoc[2] <= 0 && riskLoc[3] <= 0) return "++ <riskLoc>";
-	else if(riskLoc[1] <= 30 && riskLoc[2] <= 5 && riskLoc[3] <= 0) return "+ <riskLoc>";
-	else if(riskLoc[1] <= 40 && riskLoc[2] <= 10 && riskLoc[3] <= 0) return "o <riskLoc>";
-	else if(riskLoc[1] <= 50 && riskLoc[2] <= 15 && riskLoc[3] <= 5) return "- <riskLoc>";
-	else return "-- <riskLoc>";
+	if(riskLOC[1] <= 25 && riskLOC[2] <= 0 && riskLOC[3] <= 0) return "++ <riskLOC>";
+	else if(riskLOC[1] <= 30 && riskLOC[2] <= 5 && riskLOC[3] <= 0) return "+ <riskLOC>";
+	else if(riskLOC[1] <= 40 && riskLOC[2] <= 10 && riskLOC[3] <= 0) return "o <riskLOC>";
+	else if(riskLOC[1] <= 50 && riskLOC[2] <= 15 && riskLOC[3] <= 5) return "- <riskLOC>";
+	else return "-- <riskLOC>";
 }
 
 //++	0-3%
@@ -265,13 +251,13 @@ private str GetCCRank(map[loc, int] methodCCs, map[loc, int] methodLocs, int tot
 //o		5-10%
 //-		10-20%
 //--	20-100%
-private str GetDuplicationRank(num duplLoc, num totalLoc)
+private str GetDuplicationRank(num duplLOC, num totalLOC)
 {
-	num percentage = (duplLoc / totalLoc) * 100.0;
+	num percentage = (duplLOC / totalLOC) * 100.0;
 	
-	if(percentage < 3) return "++ (<percentage>%)";
-	else if(percentage < 5) return "+ (<percentage>%)";
-	else if(percentage < 10) return "o (<percentage>%)";
-	else if(percentage < 20) return "- (<percentage>%)";
+	if(percentage <= 3) return "++ (<percentage>%)";
+	else if(percentage <= 5) return "+ (<percentage>%)";
+	else if(percentage <= 10) return "o (<percentage>%)";
+	else if(percentage <= 20) return "- (<percentage>%)";
 	else return "-- (<percentage>%)";
 }

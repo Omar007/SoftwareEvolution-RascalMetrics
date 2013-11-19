@@ -50,36 +50,34 @@ public int DuplLOC(M3 model, set[loc] compilationUnits)
 		}
 	}
 	
-	occurences -= (string: () | string <- occurences, size(occurences[string]) == 1,
-		location <- occurences[string], size(occurences[string][location]) == 1);
+	occurences -= (s: () | s <- occurences, size(occurences[s]) == 1,
+		l <- occurences[s], size(occurences[s][l]) == 1);
+	
 	
 	println("SETUP PHASE COMPLETE! <size(loadedFiles)> files have been loaded.");
-	
-	int dupedLines = (0 | it + 1 | string <- occurences, string != "{", string != "}", location <- occurences[string]);
+	int dupedLines = (0 | it + 1 | s <- occurences, s != "{", s != "}", l <- occurences[s]);
 	println("<dupedLines> line/file duplication occurences detected.");
 	int dupeCheckLineCount = 0;
 	
+	
 	int duplLineCount = 0;
 	
-	for(codeLine <- occurences, codeLine != "{" && codeLine != "}",
+	for(codeLine <- occurences, codeLine != "{", codeLine != "}",
 		fileLoc <- occurences[codeLine])
 	{
 		dupeCheckLineCount += 1;
 		println("Checking line/file occurence <dupeCheckLineCount> of <dupedLines>. File = <fileLoc>");
 		
 		int mySize = size(loadedFiles[fileLoc]);
-	
+		
 		for(int lineNr <- occurences[codeLine][fileLoc], lineNr in occurences[codeLine][fileLoc],
 			other <- occurences[codeLine])
 		{
 			int otherSize = size(loadedFiles[other]);
-		
+			
 			for(int otherLineNr <- occurences[codeLine][other], otherLineNr in occurences[codeLine][other],
 				(other == fileLoc ? otherLineNr - lineNr >= 6 : true))
 			{
-				//int iTest = (-1 | it - 1 | lineNr + i >= 0, otherLineNr + i >= 0,
-				//	loadedFiles[fileLoc][lineNr + i] == loadedFiles[other][otherLineNr + i]);
-				
 				int i = -1;
 				int j = 1;
 				bool iDone = false;
@@ -110,6 +108,23 @@ public int DuplLOC(M3 model, set[loc] compilationUnits)
 				i += 1; //Exclude i itself
 				if((j - i) >= 6)
 				{
+					//Amount of clones
+					duplLineCount += (0 | it + 1 | k <- [i..j],
+						lineNr + k in occurences[loadedFiles[fileLoc][lineNr + k]][fileLoc]
+						|| otherLineNr + k in occurences[loadedFiles[other][otherLineNr + k]][other] );
+					
+					//occurences[loadedFiles[fileLoc][lineNr + k]][fileLoc] -= [ lineNr + k | k <- [i..j] ];
+					//occurences[loadedFiles[other][otherLineNr + k]][other] -= [ otherLineNr + k | k <- [i..j] ];
+					
+					//If using a 'checked' list instead
+					////Amount of clones
+					//duplLineCount += (0 | it + 1 | k <- [i..j], lineNr + k notin alreadyChecked[fileLoc]
+					//	|| otherLineNr + k notin alreadyChecked[other] );
+					//
+					//alreadyChecked[fileLoc] += { lineNr + k | k <- [i..j] };
+					//alreadyChecked[other] += { otherLineNr + k | k <- [i..j] };
+					
+					
 					for(k <- [i..j])
 					{
 						bool origIn = loadedFiles[fileLoc][lineNr + k] in occurences
