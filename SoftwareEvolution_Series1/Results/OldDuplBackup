@@ -1,0 +1,112 @@
+private int LineDuplicationCount(M3 model, set[loc] compilationUnits)
+{
+	map[loc, list[str]] loadedFiles = ();
+	map[str, map[loc, list[int]]] occurences = ();
+	
+	for(cu <- compilationUnits)
+	{
+		list[str] cuLines = [ line | line <- CodeNoComments(model@documentation[cu], cu), /^\s*$/ !:= line];
+		
+		if (size(cuLines) < 6)
+		{
+			continue;
+		}
+		
+		loadedFiles += (cu: cuLines);
+		
+		int i = 0;
+		for(cuLine <- cuLines)
+		{
+			cuLine = trim(cuLine);
+			loadedFiles[cu][i] = cuLine;
+
+			//(occurences[cuLine] ? (cu: {})) [cu] ? { } += i;
+			list[int] emptyIntList = [];
+			map[loc, list[int]] tmp = occurences[cuLine] ? (cu: emptyIntList);
+			tmp[cu] ? emptyIntList += [ i ];
+			occurences[cuLine] = tmp;
+
+			i += 1;
+		}
+	}
+	
+	for(string <- occurences)
+	{
+		if(size(occurences[string]) == 1)
+		{
+			for(location <- occurences[string]) //Loop to get 1? :/
+			{
+				if(size(occurences[string][location]) == 1)
+				{
+					occurences -= (string: ());
+				}
+			}
+		}
+	}
+	
+	println("SETUP PHASE COMPLETE! <size(loadedFiles)> files have been loaded.");
+	
+	int dupedLines = (0 | it + 1 | string <- occurences, location <- occurences[string]);
+	println("<dupedLines> line/file duplication occurences detected.");
+	int dupeCheckLineCount = 0;
+	
+	int duplLineCount = 0;
+	
+	for(codeLine <- occurences)
+	{
+		for(fileLoc <- occurences[codeLine])
+		{
+			dupeCheckLineCount += 1;
+			println("Checking line/file occurence <dupeCheckLineCount> of <dupedLines>. File = <fileLoc>");
+			
+			int mySize = size(loadedFiles[fileLoc]);
+		
+			for(int lineNr <- occurences[codeLine][fileLoc])
+			{
+				occurences[codeLine][fileLoc] -= [ lineNr ];
+			
+				for(other <- occurences[codeLine])
+				{
+					int otherSize = size(loadedFiles[other]);
+				
+					for(int otherLineNr <- occurences[codeLine][other])
+					{
+						if((other == fileLoc && otherLineNr - lineNr < 6)
+							|| lineNr + 6 >= mySize || otherLineNr + 6 >= otherSize
+							|| otherLineNr notin occurences[codeLine][other])
+						{
+							continue;
+						}
+						
+						bool success = true;
+						int i = 0;
+						while(success)
+						{
+							if(lineNr + i >= mySize || otherLineNr + i >= otherSize
+								|| loadedFiles[other][otherLineNr + i] != loadedFiles[fileLoc][lineNr + i])
+							{
+								if(i < 6) success = false;
+								break;
+							}
+							
+							i += 1;
+						}
+						
+						if(success)
+						{
+							duplLineCount += i;
+							
+							for(j <- [0..i])
+							{
+								occurences[loadedFiles[fileLoc][lineNr + j]][fileLoc] -= [ lineNr + j ];
+								occurences[loadedFiles[other][otherLineNr + j]][other] -= [ otherLineNr + j ];
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	return duplLineCount;
+}

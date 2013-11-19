@@ -1,0 +1,260 @@
+--------------------
+Metrics for: |project://MetricsTestCases|
+--------------------
+Calc M3 Start:			$2013-11-15T00:06:17.136+01:00$
+Calc M3 End:			$2013-11-15T00:06:17.243+01:00$
+Calc AST Start:			$2013-11-15T00:06:17.247+01:00$
+Calc AST End:			$2013-11-15T00:06:17.342+01:00$
+Calc Total LOC Start:			$2013-11-15T00:06:17.346+01:00$
+Calc Total LOC End:			$2013-11-15T00:06:17.461+01:00$
+Calc Method LOC Start:			$2013-11-15T00:06:17.464+01:00$
+Calc Method LOC End:			$2013-11-15T00:06:17.581+01:00$
+Calc Method CC Start:			$2013-11-15T00:06:17.584+01:00$
+Calc Method CC End:			$2013-11-15T00:06:17.591+01:00$
+Calc Duplication Start:			$2013-11-15T00:06:17.595+01:00$
+Calc Duplication End:			$2013-11-15T00:06:17.759+01:00$
+Calc Rating Start:			$2013-11-15T00:06:17.763+01:00$
+Calc Rating End:			$2013-11-15T00:06:17.768+01:00$
+
+Duplicated Lines: 8
+LOC Rating:			++ (123)
+CC Rating:			++ (3:0.0,2:0.0,1:0.0)
+Dupl Rating:			o (6.504065041000%)
+Total Time:			duration(0,0,0,0,0,0,653)
+
+
+--------------------
+Metrics for: |project://smallsql0.21_src|
+Excluding: |project://smallsql0.21_src/src/smallsql/junit/|
+--------------------
+Calc M3 Start:			$2013-11-15T00:06:17.811+01:00$
+Calc M3 End:			$2013-11-15T00:06:21.984+01:00$
+Calc AST Start:			$2013-11-15T00:06:21.987+01:00$
+Calc AST End:			$2013-11-15T00:06:26.428+01:00$
+Calc Total LOC Start:			$2013-11-15T00:06:26.453+01:00$
+Calc Total LOC End:			$2013-11-15T00:06:35.683+01:00$
+Calc Method LOC Start:			$2013-11-15T00:06:35.688+01:00$
+Calc Method LOC End:			$2013-11-15T00:06:41.858+01:00$
+Calc Method CC Start:			$2013-11-15T00:06:41.941+01:00$
+Calc Method CC End:			$2013-11-15T00:06:42.735+01:00$
+Calc Duplication Start:			$2013-11-15T00:06:42.823+01:00$
+Calc Duplication End:			$2013-11-15T00:07:43.186+01:00$
+Calc Rating Start:			$2013-11-15T00:07:43.189+01:00$
+Calc Rating End:			$2013-11-15T00:07:43.410+01:00$
+
+Duplicated Lines: 927
+LOC Rating:			++ (18716)
+CC Rating:			-- (3:6.705492627000,2:13.25603761000,1:8.928189784000)
+Dupl Rating:			+ (4.952981406000%)
+Total Time:			duration(0,0,0,0,1,25,617)
+
+
+--------------------
+Metrics for: |project://hsqldb-2.3.1|
+Excluding: |project://hsqldb-2.3.1/hsqldb/src/org/hsqldb/test/|
+--------------------
+Calc M3 Start:			$2013-11-15T00:07:43.450+01:00$
+Calc M3 End:			$2013-11-15T00:08:03.177+01:00$
+Calc AST Start:			$2013-11-15T00:08:03.181+01:00$
+Calc AST End:			$2013-11-15T00:08:25.585+01:00$
+Calc Total LOC Start:			$2013-11-15T00:08:25.589+01:00$
+Calc Total LOC End:			$2013-11-15T00:08:55.443+01:00$
+Calc Method LOC Start:			$2013-11-15T00:08:55.448+01:00$
+Calc Method LOC End:			$2013-11-15T00:09:30.088+01:00$
+Calc Method CC Start:			$2013-11-15T00:09:30.450+01:00$
+Calc Method CC End:			$2013-11-15T00:09:35.016+01:00$
+Calc Duplication Start:			$2013-11-15T00:09:35.379+01:00$
+Calc Duplication End:			$2013-11-15T00:45:44.723+01:00$
+Calc Rating Start:			$2013-11-15T00:45:44.727+01:00$
+Calc Rating End:			$2013-11-15T00:45:46.151+01:00$
+
+Duplicated Lines: 14435
+LOC Rating:			+ (152849)
+CC Rating:			-- (3:9.762576137000,2:11.45640469000,1:14.27029290000)
+Dupl Rating:			o (9.443961033000%)
+Total Time:			duration(0,0,0,0,38,2,719)
+
+
+--------------------
+Metrics for: |project://MetricsTestCases|
+--------------------
+Calc M3 Start:			$2013-11-18T12:47:17.187+01:00$
+Calc M3 End:			$2013-11-18T12:47:18.393+01:00$
+Calc AST Start:			$2013-11-18T12:47:18.406+01:00$
+Calc AST End:			$2013-11-18T12:47:18.792+01:00$
+Calc Total LOC Start:			$2013-11-18T12:47:18.865+01:00$
+Calc Total LOC End:			$2013-11-18T12:47:19.013+01:00$
+Calc Method LOC Start:			$2013-11-18T12:47:19.021+01:00$
+Calc Method LOC End:			$2013-11-18T12:47:19.507+01:00$
+Calc Method CC Start:			$2013-11-18T12:47:19.516+01:00$
+Calc Method CC End:			$2013-11-18T12:47:19.573+01:00$
+Calc Duplication Start:			$2013-11-18T12:47:19.604+01:00$
+Calc Duplication End:			$2013-11-18T12:47:19.949+01:00$
+
+Calc Rating Start:			$2013-11-18T12:47:19.968+01:00$
+Calc Rating End:			$2013-11-18T12:47:19.998+01:00$
+Duplicated Lines: 6
+LOC Rating:			++ (123)
+CC Rating:			++ (3:0.0,2:0.0,1:0.0)
+Dupl Rating:			+ (4.878048780000%)
+Total Time:			duration(0,0,0,0,0,2,854)
+
+
+--------------------
+Metrics for: |project://smallsql0.21_src|
+Excluding: |project://smallsql0.21_src/src/smallsql/junit/|
+--------------------
+Calc M3 Start:			$2013-11-18T12:47:20.104+01:00$
+Calc M3 End:			$2013-11-18T12:47:35.495+01:00$
+Calc AST Start:			$2013-11-18T12:47:35.506+01:00$
+Calc AST End:			$2013-11-18T12:47:50.869+01:00$
+Calc Total LOC Start:			$2013-11-18T12:47:55.253+01:00$
+Calc Total LOC End:			$2013-11-18T12:48:04.205+01:00$
+Calc Method LOC Start:			$2013-11-18T12:48:04.213+01:00$
+Calc Method LOC End:			$2013-11-18T12:48:26.854+01:00$
+Calc Method CC Start:			$2013-11-18T12:48:27.230+01:00$
+Calc Method CC End:			$2013-11-18T12:48:30.538+01:00$
+Calc Duplication Start:			$2013-11-18T12:48:30.871+01:00$
+Calc Duplication End:			$2013-11-18T12:51:36.609+01:00$
+
+Calc Rating Start:			$2013-11-18T12:51:36.637+01:00$
+Calc Rating End:			$2013-11-18T12:51:37.515+01:00$
+Duplicated Lines: 761
+LOC Rating:			++ (18716)
+CC Rating:			-- (3:6.705492627000,2:13.25603761000,1:8.928189784000)
+Dupl Rating:			+ (4.066039752000%)
+Total Time:			duration(0,0,0,0,4,17,449)
+
+
+--------------------
+Metrics for: |project://hsqldb-2.3.1|
+Excluding: |project://hsqldb-2.3.1/hsqldb/src/org/hsqldb/test/|
+--------------------
+Calc M3 Start:			$2013-11-18T12:51:37.607+01:00$
+Calc M3 End:			$2013-11-18T12:52:44.239+01:00$
+Calc AST Start:			$2013-11-18T12:52:44.247+01:00$
+Calc AST End:			$2013-11-18T12:55:17.253+01:00$
+Calc Total LOC Start:			$2013-11-18T12:56:34.260+01:00$
+Calc Total LOC End:			$2013-11-18T13:04:55.052+01:00$
+Calc Method LOC Start:			$2013-11-18T13:04:55.064+01:00$
+Calc Method LOC End:			$2013-11-18T13:16:14.453+01:00$
+Calc Method CC Start:			$2013-11-18T13:16:19.978+01:00$
+Calc Method CC End:			$2013-11-18T13:17:42.727+01:00$
+Calc Duplication Start:			$2013-11-18T13:19:09.879+01:00$
+interrupted:
+	at DuplLOC(:220,5)
+	at CalcDuplLOC(:71,49)
+	at MetricsOverview(:24,29)
+	at RunDefaultMetrics(:24,1)
+	at $shell$(/:1,0)
+
+
+--------------------
+Metrics for: |project://MetricsTestCases|
+--------------------
+M3 Time:			duration(0,0,0,0,0,0,388)
+AST Time:			duration(0,0,0,0,0,0,323)
+LOC Time:			duration(0,0,0,0,0,0,54)
+Method LOC Time:	duration(0,0,0,0,0,1,7)
+Method CC Time:		duration(0,0,0,0,0,0,19)
+Duplication Time:	duration(0,0,0,0,0,0,308)
+
+Calc Rating Time:	duration(0,0,0,0,0,0,10)
+Duplicated Lines:	8
+LOC Rating:			++ (131)
+CC Rating:		++ (3:0.0,2:0.0,1:0.0)
+Dupl Rating:			o (6.106870229000%)
+Total Time:			duration(0,0,0,0,0,2,231)
+
+
+--------------------
+Metrics for: |project://smallsql0.21_src|
+Excluding: |project://smallsql0.21_src/src/smallsql/junit/|
+--------------------
+M3 Time:			duration(0,0,0,0,0,14,41)
+AST Time:			duration(0,0,0,0,0,15,147)
+LOC Time:			duration(0,0,0,0,0,7,713)
+Method LOC Time:	duration(0,0,0,0,0,21,576)
+Method CC Time:		duration(0,0,0,0,0,3,45)
+Duplication Time:	duration(0,0,0,0,5,25,354)
+
+Calc Rating Time:	duration(0,0,0,0,0,0,967)
+Duplicated Lines:	684
+LOC Rating:			++ (18716)
+CC Rating:		-- (3:6.705492627000,2:13.25603761000,1:8.928189784000)
+Dupl Rating:			+ (3.654627057000%)
+Total Time:			duration(0,0,0,0,6,32,927)
+
+
+--------------------
+Metrics for: |project://hsqldb-2.3.1|
+Excluding: |project://hsqldb-2.3.1/hsqldb/src/org/hsqldb/test/|
+--------------------
+interrupted:
+	at createM3FromEclipseProject(:30,34)
+	at GetProjectM3(:8,0)
+	at CalcM3(:64,32)
+	at MetricsOverview(:24,29)
+	at RunDefaultMetrics(:24,1)
+	at $shell$(/:1,0)
+
+
+--------------------
+Metrics for: |project://MetricsTestCases|
+Start Time: $2013-11-19T00:42:17.140+01:00$
+--------------------
+M3 Time:			duration(0,0,0,0,0,0,134)
+AST Time:			duration(0,0,0,0,0,0,123)
+LOC Time:			duration(0,0,0,0,0,0,36)
+Method LOC Time:	duration(0,0,0,0,0,0,163)
+Method CC Time:		duration(0,0,0,0,0,0,16)
+Duplication Time:	duration(0,0,0,0,0,0,140)
+
+Calc Rating Time:	duration(0,0,0,0,0,0,8)
+Duplicated Lines:	8
+LOC Rating:			++ (131)
+CC Rating:			++ (3:0.0,2:0.0,1:0.0)
+Dupl Rating:		o (6.106870229000%)
+Total Time:			duration(0,0,0,0,0,0,683)
+
+
+--------------------
+Metrics for: |project://smallsql0.21_src|
+Excluding: |project://smallsql0.21_src/src/smallsql/junit/|
+Start Time: $2013-11-19T00:42:17.833+01:00$
+--------------------
+M3 Time:			duration(0,0,0,0,0,6,393)
+AST Time:			duration(0,0,0,0,0,5,305)
+LOC Time:			duration(0,0,0,0,0,2,414)
+Method LOC Time:	duration(0,0,0,0,0,7,627)
+Method CC Time:		duration(0,0,0,0,0,0,920)
+Duplication Time:	duration(0,0,0,0,1,3,722)
+
+Calc Rating Time:	duration(0,0,0,0,0,0,266)
+Duplicated Lines:	678
+LOC Rating:			++ (18716)
+CC Rating:			-- (3:6.705492627000,2:13.25603761000,1:8.928189784000)
+Dupl Rating:		+ (3.622568925000%)
+Total Time:			duration(0,0,0,0,1,28,769)
+
+
+--------------------
+Metrics for: |project://hsqldb-2.3.1|
+Excluding: |project://hsqldb-2.3.1/hsqldb/src/org/hsqldb/test/|
+Start Time: $2013-11-19T00:43:46.611+01:00$
+--------------------
+M3 Time:			duration(0,0,0,0,0,22,473)
+AST Time:			duration(0,0,0,0,0,23,165)
+LOC Time:			duration(0,0,0,0,0,20,677)
+Method LOC Time:	duration(0,0,0,0,0,36,282)
+Method CC Time:		duration(0,0,0,0,0,4,992)
+Duplication Time:	duration(0,0,0,0,45,40,149)
+
+Calc Rating Time:	duration(0,0,0,0,0,1,79)
+Duplicated Lines:	9840
+LOC Rating:			+ (152849)
+CC Rating:			-- (3:9.762576137000,2:11.45640469000,1:14.27029290000)
+Dupl Rating:		o (6.437726122000%)
+Total Time:			duration(0,0,0,0,47,37,323)
+
+
